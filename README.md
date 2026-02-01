@@ -15,7 +15,7 @@
 ```r
 # Install from GitHub
 install.packages("devtools") # if you don't have it
-devtools::install_github("https://github.com/yihunzeleke/rtimecapsule")
+devtools::install_github("yihun/rtimecapsule")
 ```
 ## Usage
 ```r
