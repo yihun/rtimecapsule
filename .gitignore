@@ -1,0 +1,13 @@
+.Rproj.user
+inst/doc
+**/.quarto/
+/doc/
+/Meta/
+docs
+.Rhistory
+.RData
+.DS_Store
+.rtimecapsule
+.httr-oauth
+.quarto
+.rtimecapsule.Rproj

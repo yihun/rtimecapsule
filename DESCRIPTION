@@ -1,0 +1,32 @@
+Package: rtimecapsule
+Type: Package
+Title: Automatic Backup for R Scripts, Rmd, and Quarto Files
+Version: 0.1.0
+Authors@R: 
+    person(
+      given = "Yihun",
+      family = "Zeleke",
+      email = "yihunshegnew@gmail.com",
+      role = c("aut", "cre")
+    )
+Description: 
+    Provides automatic tracking and backup of R scripts (.R), R Markdown (.Rmd), and Quarto (.qmd) files
+    within an RStudio project. The package creates timestamped backups in a hidden `.rtimecapsule` folder
+    whenever a file changes, and allows restoring previous versions. Designed to be lightweight and dependency-free.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: R (>= 4.3)
+Imports:
+    later
+Suggests: 
+    knitr,
+    quarto,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr, quarto
+URL: https://github.com/yihunzeleke/rtimecapsule, https://yihunzeleke.github.io/rtimecapsule/
+BugReports: https://github.com/yihunzeleke/rtimecapsule/issues
