@@ -1,7 +1,7 @@
 # rtimecapsule <img src="man/figures/logo.png" align="right" height="100"/>
 
 [![CRAN status](https://www.r-pkg.org/badges/version/rtimecapsule)](https://CRAN.R-project.org/package=rtimecapsule)
-[![R-CMD-check](https://github.com/yihunzeleke/rtimecapsule/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yihunzeleke/rtimecapsule/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
 
