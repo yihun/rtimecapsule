@@ -28,5 +28,5 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr, quarto
-URL: https://github.com/yihunzeleke/rtimecapsule, https://yihunzeleke.github.io/rtimecapsule/
-BugReports: https://github.com/yihunzeleke/rtimecapsule/issues
+URL: https://github.com/yihun/rtimecapsule, https://yihun.github.io/rtimecapsule/
+BugReports: https://github.com/yihun/rtimecapsule/issues
