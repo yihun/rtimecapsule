@@ -10,12 +10,12 @@ The `rtimecapsule` package provides automated, real-time backup and restoration 
 
 ## Features
 
-- 🔄 **Automatic Background Backups**: Non-blocking file monitoring that runs while you work
-- 📁 **Selective File Tracking**: Choose which files or file types to backup
-- ⚡ **Quick Restoration**: Restore individual files or your entire project instantly
-- 🔍 **Status Monitoring**: Check backup status and tracked files at any time
-- 🚀 **Auto-Start Support**: Configure automatic backup on project load
-- 💾 **Lightweight**: Minimal performance impact with configurable scan intervals
+- **Automatic Background Backups**: Background execution is implemented using scheduled callbacks and does not create separate system processes.
+- **Selective File Tracking**: Choose which files or file types to backup
+- **Quick Restoration**: Restore individual files or your entire project instantly
+- **Status Monitoring**: Check backup status and tracked files at any time
+- **Auto-Start Support**: Configure automatic backup on project load
+- **Lightweight**: Minimal performance impact with configurable scan intervals
 
 ## Installation
 
@@ -39,7 +39,7 @@ capsule_status()
 # Restore a specific file
 restore_file("R/analysis.R")
 
-# Restore everything after a crash
+# Restore files from the most recent backup
 restore_last_crash()
 
 # Stop backups
@@ -398,7 +398,7 @@ getwd()
 A: Yes, the background task continues running until you call `stop_autobackup()`.
 
 **Q: Can I backup files outside my project?**  
-A: No, rtimecapsule only tracks files within the `RStudio`  project root directory.
+A: No, rtimecapsule only tracks files within the `R project` root directory.
 
 **Q: What happens if I close R while backups are running?**  
 A: Backups stop when the R session ends. Use `use_autobackup()` to restart automatically.
