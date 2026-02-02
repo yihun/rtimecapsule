@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Automatic Backup for R Scripts, Rmd, and Quarto Files • rtimecapsule</title>
-<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">rtimecapsule</a>
 
@@ -39,6 +39,14 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/yihun/rtimecapsule/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
@@ -52,38 +60,415 @@
 </h1>
 </div>
 <p><a href="https://CRAN.R-project.org/package=rtimecapsule" class="external-link"><img src="https://www.r-pkg.org/badges/version/rtimecapsule" alt="CRAN status"></a> <a href="https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></p>
-<p><strong>rtimecapsule</strong> is an R package that automatically backs up your R, Rmd, and Qmd files in a project as you work, so you can recover from accidental loss or crashes.</p>
-<hr>
+<p><strong>rtimecapsule</strong> is an R package that automatically backs up your R, Rmd, and Qmd files in a project as you work, so you can recover from accidental loss or crashes. # <code>rtimecapsule</code>: Automated File Backup and Restoration for R Projects</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>The rtimecapsule package provides automated, real-time backup and restoration capabilities for R project files. It continuously monitors your files for changes and maintains backup copies in a hidden <code>.rtimecapsule</code> directory, allowing you to recover from crashes, accidental deletions, or unwanted modifications.</p>
+</div>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<ul>
+<li>🔄 <strong>Automatic Background Backups</strong>: Non-blocking file monitoring that runs while you work</li>
+<li>📁 <strong>Selective File Tracking</strong>: Choose which files or file types to backup</li>
+<li>⚡ <strong>Quick Restoration</strong>: Restore individual files or your entire project instantly</li>
+<li>🔍 <strong>Status Monitoring</strong>: Check backup status and tracked files at any time</li>
+<li>🚀 <strong>Auto-Start Support</strong>: Configure automatic backup on project load</li>
+<li>💾 <strong>Lightweight</strong>: Minimal performance impact with configurable scan intervals</li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Install from GitHub</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span> <span class="co"># if you don't have it</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"yihun/rtimecapsule"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Install from GitHub (replace USERNAME with actual GitHub username)</span></span>
+<span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"yihun/rtimecapsule"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+<h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yihun/rtimecapsule" class="external-link">rtimecapsule</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Start automatic backups every 5 seconds</span></span>
-<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co"># Start automatic backups for all R files</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fl">2</span>, files <span class="op">=</span> <span class="st">".R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Check status</span></span>
+<span><span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restore a specific file</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/analysis.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restore everything after a crash</span></span>
+<span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Stop backups</span></span>
-<span><span class="fu"><a href="reference/stop_autobackup.html">stop_autobackup</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Enable project auto-start</span></span>
-<span><span class="fu"><a href="reference/use_autobackup.html">use_autobackup</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Check backup status</span></span>
-<span><span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/stop_autobackup.html">stop_autobackup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="backup-files">Backup Files<a class="anchor" aria-label="anchor" href="#backup-files"></a>
+<h2 id="core-functions">Core Functions<a class="anchor" aria-label="anchor" href="#core-functions"></a>
 </h2>
-<p>All backups are stored inside the <code>.rtimecapsule/</code> folder in the root of your project.</p>
+<div class="section level3">
+<h3 id="backup-management">Backup Management<a class="anchor" aria-label="anchor" href="#backup-management"></a>
+</h3>
+<div class="section level4">
+<h4 id="start_autobackupinterval--2-files--null">
+<code>start_autobackup(interval = 2, files = NULL)</code><a class="anchor" aria-label="anchor" href="#start_autobackupinterval--2-files--null"></a>
+</h4>
+<p>Start automatic file backups in the background. This function monitors your project files and creates backups whenever changes are detected.</p>
+<p><strong>Arguments:</strong> - <code>interval</code>: Number of seconds between file checks (default: 2) - <code>files</code>: Which files to track: - <code>NULL</code> (default): Track all files in the project - <code>".R"</code>: Track only R scripts - <code>c("script1.R", "report.Rmd", "dashboard.qmd")</code>: Track specific files</p>
+<p><strong>Details:</strong></p>
+<p>The function runs a non-blocking background task using the <code>later</code> package. It: 1. Scans tracked files at the specified interval 2. Computes file hashes to detect changes 3. Creates backups in <code>.rtimecapsule/</code> when files change 4. Continues running until <code><a href="reference/stop_autobackup.html">stop_autobackup()</a></code> is called</p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Monitor all files, check every 2 seconds</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level4">
+<h4 id="stop_autobackup">
+<code>stop_autobackup()</code><a class="anchor" aria-label="anchor" href="#stop_autobackup"></a>
+</h4>
+<p>Stop the automatic backup process.</p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Stop backups when you're done working</span></span>
+<span><span class="fu"><a href="reference/stop_autobackup.html">stop_autobackup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level4">
+<h4 id="use_autobackup">
+<code>use_autobackup()</code><a class="anchor" aria-label="anchor" href="#use_autobackup"></a>
+</h4>
+<p>Enable automatic startup of backups when you open the project. This adds a startup hook to your project’s <code>.Rprofile</code> file.</p>
+<p>This ensures backups start automatically whenever you open the project in an interactive R session.</p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Set up auto-start (run once per project)</span></span>
+<span><span class="fu"><a href="reference/use_autobackup.html">use_autobackup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Now backups will start automatically when you open the project</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level4">
+<h4 id="capsule_status">
+<code>capsule_status()</code><a class="anchor" aria-label="anchor" href="#capsule_status"></a>
+</h4>
+<p>Display the current status of rtimecapsule, including whether backups are running, how many files are tracked, and how many backups exist.</p>
+<p><strong>Returns:</strong></p>
+<p>A list with three elements: - <code>running</code>: Logical indicating if auto-backup is active - <code>tracked_files</code>: Number of files currently being tracked - <code>backup_files</code>: Number of backup files in <code>.rtimecapsule/</code></p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check status</span></span>
+<span><span class="va">status</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">status</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $running</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $tracked_files</span></span>
+<span><span class="co">#&gt; [1] 15</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $backup_files</span></span>
+<span><span class="co">#&gt; [1] 12</span></span></code></pre></div>
+<hr>
+</div>
+</div>
+<div class="section level3">
+<h3 id="file-restoration">File Restoration<a class="anchor" aria-label="anchor" href="#file-restoration"></a>
+</h3>
+<div class="section level4">
+<h4 id="restore_filefile">
+<code>restore_file(file)</code><a class="anchor" aria-label="anchor" href="#restore_filefile"></a>
+</h4>
+<p>Restore a single file from backup to its original location.</p>
+<p><strong>Arguments:</strong> - <code>file</code>: File path relative to project root</p>
+<p><strong>Details:</strong></p>
+<p>This function: 1. Locates the project root directory 2. Searches for the backup file in <code>.rtimecapsule/</code> 3. Creates any necessary parent directories 4. Copies the backup file to the target location, overwriting if it exists</p>
+<p><strong>Returns:</strong></p>
+<p>Returns <code>TRUE</code> invisibly on success.</p>
+<p><strong>Errors:</strong></p>
+<p>Throws an error if no backup exists for the specified file.</p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Restore a single R script</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/analysis.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restore a file in a subdirectory</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"scripts/preprocessing/clean_data.R"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level4">
+<h4 id="restore_last_crash">
+<code>restore_last_crash()</code><a class="anchor" aria-label="anchor" href="#restore_last_crash"></a>
+</h4>
+<p>Restore all files from the last backup. Useful for recovering from system crashes or reverting major changes.</p>
+<p><strong>Details:</strong></p>
+<p>This function performs a complete restoration: 1. Locates the project root directory 2. Checks for the existence of <code>.rtimecapsule/</code> backup directory 3. Recursively lists all backup files 4. Restores each file to its original location, maintaining directory structure 5. Overwrites existing files with backup versions</p>
+<p><strong>Returns:</strong></p>
+<p>Returns <code>TRUE</code> invisibly on success.</p>
+<p><strong>Errors:</strong></p>
+<p>Throws an error if no <code>.rtimecapsule</code> backup directory exists.</p>
+<p><strong>Warning:</strong></p>
+<p>⚠️ This function will overwrite ALL current versions of files with their backup versions. Any changes made since the last backup will be lost.</p>
+<p><strong>Examples:</strong></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Restore all backed up files after a crash</span></span>
+<span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="backup-structure">Backup Structure<a class="anchor" aria-label="anchor" href="#backup-structure"></a>
+</h2>
+<p>rtimecapsule maintains a hidden <code>.rtimecapsule</code> directory that mirrors your project structure:</p>
+<pre><code>your-project/
+├── .rtimecapsule/          # Hidden backup directory
+│   ├── R/
+│   │   ├── analysis.R      # Backed up version
+│   │   └── utils.R
+│   ├── data/
+│   │   └── dataset.csv
+│   └── scripts/
+│       └── preprocess.R
+├── R/                      # Your working files
+│   ├── analysis.R          # Current version
+│   └── utils.R
+├── .Rprofile               # Optional: auto-start configuration
+└── ...</code></pre>
+</div>
+<div class="section level2">
+<h2 id="common-workflows">Common Workflows<a class="anchor" aria-label="anchor" href="#common-workflows"></a>
+</h2>
+<div class="section level3">
+<h3 id="initial-setup">Initial Setup<a class="anchor" aria-label="anchor" href="#initial-setup"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yihun/rtimecapsule" class="external-link">rtimecapsule</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Enable auto-start (one-time setup)</span></span>
+<span><span class="fu"><a href="reference/use_autobackup.html">use_autobackup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Start backups for this session</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="daily-development">Daily Development<a class="anchor" aria-label="anchor" href="#daily-development"></a>
+</h3>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Backups run automatically in the background</span></span>
+<span><span class="co"># Check status occasionally</span></span>
+<span><span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># If you need to restore a file you accidentally changed</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/analysis.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Stop backups when done for the day (optional)</span></span>
+<span><span class="fu"><a href="reference/stop_autobackup.html">stop_autobackup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="recovering-from-a-crash">Recovering from a Crash<a class="anchor" aria-label="anchor" href="#recovering-from-a-crash"></a>
+</h3>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># After R crashes and you restart</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yihun/rtimecapsule" class="external-link">rtimecapsule</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Your work is recovered!</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="before-major-refactoring">Before Major Refactoring<a class="anchor" aria-label="anchor" href="#before-major-refactoring"></a>
+</h3>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Ensure backups are running</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span>interval <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="co"># More frequent checks</span></span>
+<span></span>
+<span><span class="co"># Do your refactoring...</span></span>
+<span></span>
+<span><span class="co"># If something goes wrong</span></span>
+<span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="selective-restoration">Selective Restoration<a class="anchor" aria-label="anchor" href="#selective-restoration"></a>
+</h3>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># List all backed up files</span></span>
+<span><span class="va">backup_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">".rtimecapsule"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">backup_files</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Restore only specific files</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/core_functions.R"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/analysis.R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Or restore everything</span></span>
+<span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="best-practices">Best Practices<a class="anchor" aria-label="anchor" href="#best-practices"></a>
+</h2>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Start backups early</strong>: Run <code><a href="reference/start_autobackup.html">start_autobackup()</a></code> at the beginning of your session</li>
+<li>
+<strong>Use auto-start</strong>: Set up <code><a href="reference/use_autobackup.html">use_autobackup()</a></code> so you never forget</li>
+<li>
+<strong>Choose appropriate intervals</strong>: Balance between protection and performance
+<ul>
+<li>Active development: 1-2 seconds</li>
+<li>Normal work: 2-5 seconds</li>
+<li>Light monitoring: 5-10 seconds</li>
+</ul>
+</li>
+<li>
+<strong>Be selective with files</strong>: Only track files you’re actively editing</li>
+<li>
+<strong>Check status regularly</strong>: Use <code><a href="reference/capsule_status.html">capsule_status()</a></code> to ensure backups are running</li>
+<li>
+<strong>Combine with version control</strong>: Use rtimecapsule for real-time protection, Git for milestones</li>
+<li>
+<strong>Test restoration</strong>: Try <code><a href="reference/restore_file.html">restore_file()</a></code> on a non-critical file to understand the workflow</li>
+</ol>
+</div>
+<div class="section level2">
+<h2 id="performance-considerations">Performance Considerations<a class="anchor" aria-label="anchor" href="#performance-considerations"></a>
+</h2>
+<ul>
+<li>
+<strong>File scanning</strong>: More tracked files = longer scan times</li>
+<li>
+<strong>Interval settings</strong>: Shorter intervals = more responsive but higher overhead</li>
+<li>
+<strong>File types</strong>: Large binary files may slow down hash computation</li>
+<li>
+<strong>Recommendations</strong>:
+<ul>
+<li>Track only source code files (<code>.R</code>, <code>.Rmd</code>, <code>.qmd</code>) for best performance</li>
+<li>Use 2-3 second intervals for typical projects</li>
+<li>Exclude large data files or binary outputs</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
+</h2>
+<div class="section level3">
+<h3 id="backups-not-starting">Backups Not Starting<a class="anchor" aria-label="anchor" href="#backups-not-starting"></a>
+</h3>
+<p><strong>Problem</strong>: <code><a href="reference/start_autobackup.html">start_autobackup()</a></code> doesn’t seem to work</p>
+<p><strong>Solutions</strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check if 'later' package is installed</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"later"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"later"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Verify backups are running</span></span>
+<span><span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">running</span></span>
+<span></span>
+<span><span class="co"># Check for error messages</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="no-backups-found">No Backups Found<a class="anchor" aria-label="anchor" href="#no-backups-found"></a>
+</h3>
+<p><strong>Problem</strong>: <code><a href="reference/restore_last_crash.html">restore_last_crash()</a></code> reports “No backups found”</p>
+<p><strong>Solutions</strong>:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Check if backup directory exists</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="st">".rtimecapsule"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Verify backups are being created</span></span>
+<span><span class="fu"><a href="reference/start_autobackup.html">start_autobackup</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># Make a change to a file</span></span>
+<span><span class="co"># Wait a few seconds</span></span>
+<span><span class="fu"><a href="reference/capsule_status.html">capsule_status</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">backup_files</span>  <span class="co"># Should be &gt; 0</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="file-not-restoring">File Not Restoring<a class="anchor" aria-label="anchor" href="#file-not-restoring"></a>
+</h3>
+<p><strong>Problem</strong>: <code><a href="reference/restore_file.html">restore_file()</a></code> fails</p>
+<p><strong>Solutions</strong>:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Verify the backup exists</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">".rtimecapsule"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Check file path is relative to project root</span></span>
+<span><span class="co"># Correct: "R/analysis.R"</span></span>
+<span><span class="co"># Wrong: "/absolute/path/analysis.R"</span></span>
+<span></span>
+<span><span class="co"># Ensure you're in the project directory</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
+<ul>
+<li>
+<strong>later</strong>: Required for background task scheduling</li>
+<li>
+<strong>Project root detection</strong>: Uses <code><a href="reference/project_root.html">project_root()</a></code> helper function</li>
+<li>
+<strong>File tracking</strong>: Uses <code><a href="reference/tracked_files.html">tracked_files()</a></code> helper function</li>
+<li>
+<strong>Hashing</strong>: Uses <code><a href="reference/file_hash.html">file_hash()</a></code> for change detection</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="function-reference-summary">Function Reference Summary<a class="anchor" aria-label="anchor" href="#function-reference-summary"></a>
+</h2>
+<table class="table">
+<thead><tr class="header">
+<th>Function</th>
+<th>Purpose</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="reference/start_autobackup.html">start_autobackup()</a></code></td>
+<td>Start automatic file backups</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/stop_autobackup.html">stop_autobackup()</a></code></td>
+<td>Stop automatic backups</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/use_autobackup.html">use_autobackup()</a></code></td>
+<td>Enable auto-start on project load</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/capsule_status.html">capsule_status()</a></code></td>
+<td>Check backup status</td>
+</tr>
+<tr class="odd">
+<td><code><a href="reference/restore_file.html">restore_file()</a></code></td>
+<td>Restore a specific file</td>
+</tr>
+<tr class="even">
+<td><code><a href="reference/restore_last_crash.html">restore_last_crash()</a></code></td>
+<td>Restore all backed up files</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="faq">FAQ<a class="anchor" aria-label="anchor" href="#faq"></a>
+</h2>
+<p><strong>Q: Do backups run when R is idle?</strong><br>
+A: Yes, the background task continues running until you call <code><a href="reference/stop_autobackup.html">stop_autobackup()</a></code>.</p>
+<p><strong>Q: Can I backup files outside my project?</strong><br>
+A: No, rtimecapsule only tracks files within the <code>RStudio</code> project root directory.</p>
+<p><strong>Q: What happens if I close R while backups are running?</strong><br>
+A: Backups stop when the R session ends. Use <code><a href="reference/use_autobackup.html">use_autobackup()</a></code> to restart automatically.</p>
+<p><strong>Q: Can multiple R sessions backup the same project?</strong><br>
+A: Yes, but they may overwrite each other’s backups.</p>
+<p><strong>Q: Are backups versioned?</strong><br>
+A: No, only the most recent version is kept. Use Git for version history.</p>
+<p><strong>Q: Can I exclude specific files?</strong><br>
+A: Indirectly, by specifying which files to include via the <code>files</code> parameter.</p>
+<hr>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
