@@ -1,4 +1,5 @@
 url: https://yihun.github.io/rtimecapsule/
 template:
   bootstrap: 5
-
+  bootswatch: zephyr
+  light-switch: yes
