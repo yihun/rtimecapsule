@@ -33,6 +33,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -69,12 +70,18 @@
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
 <ul>
-<li>🔄 <strong>Automatic Background Backups</strong>: Non-blocking file monitoring that runs while you work</li>
-<li>📁 <strong>Selective File Tracking</strong>: Choose which files or file types to backup</li>
-<li>⚡ <strong>Quick Restoration</strong>: Restore individual files or your entire project instantly</li>
-<li>🔍 <strong>Status Monitoring</strong>: Check backup status and tracked files at any time</li>
-<li>🚀 <strong>Auto-Start Support</strong>: Configure automatic backup on project load</li>
-<li>💾 <strong>Lightweight</strong>: Minimal performance impact with configurable scan intervals</li>
+<li>
+<strong>Automatic Background Backups</strong>: Background execution is implemented using scheduled callbacks and does not create separate system processes.</li>
+<li>
+<strong>Selective File Tracking</strong>: Choose which files or file types to backup</li>
+<li>
+<strong>Quick Restoration</strong>: Restore individual files or your entire project instantly</li>
+<li>
+<strong>Status Monitoring</strong>: Check backup status and tracked files at any time</li>
+<li>
+<strong>Auto-Start Support</strong>: Configure automatic backup on project load</li>
+<li>
+<strong>Lightweight</strong>: Minimal performance impact with configurable scan intervals</li>
 </ul>
 </div>
 <div class="section level2">
@@ -100,7 +107,7 @@
 <span><span class="co"># Restore a specific file</span></span>
 <span><span class="fu"><a href="reference/restore_file.html">restore_file</a></span><span class="op">(</span><span class="st">"R/analysis.R"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Restore everything after a crash</span></span>
+<span><span class="co"># Restore files from the most recent backup</span></span>
 <span><span class="fu"><a href="reference/restore_last_crash.html">restore_last_crash</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Stop backups</span></span>
@@ -458,7 +465,7 @@
 <p><strong>Q: Do backups run when R is idle?</strong><br>
 A: Yes, the background task continues running until you call <code><a href="reference/stop_autobackup.html">stop_autobackup()</a></code>.</p>
 <p><strong>Q: Can I backup files outside my project?</strong><br>
-A: No, rtimecapsule only tracks files within the <code>RStudio</code> project root directory.</p>
+A: No, rtimecapsule only tracks files within the <code>R project</code> root directory.</p>
 <p><strong>Q: What happens if I close R while backups are running?</strong><br>
 A: Backups stop when the R session ends. Use <code><a href="reference/use_autobackup.html">use_autobackup()</a></code> to restart automatically.</p>
 <p><strong>Q: Can multiple R sessions backup the same project?</strong><br>
