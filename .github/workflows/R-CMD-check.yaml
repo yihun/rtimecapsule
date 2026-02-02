@@ -42,17 +42,52 @@ jobs:
 
       - name: Configure CRAN mirror
         run: |
-          echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' >> ~/.Rprofile
+          cat >> ~/.Rprofile <<EOF
+          options(
+            repos = c(CRAN = "https://cloud.r-project.org"),
+            download.file.method = "libcurl",
+            download.file.extra = "-L"
+          )
+          EOF
         shell: bash
 
+      - name: Install dependencies with retry (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          Rscript -e '
+          install_with_retry <- function(pkg, max_attempts = 3) {
+            for (i in 1:max_attempts) {
+              tryCatch({
+                install.packages("remotes", repos = "https://cloud.r-project.org")
+                remotes::install_deps(dependencies = TRUE, upgrade = "never")
+                return(invisible(TRUE))
+              }, error = function(e) {
+                if (i == max_attempts) stop(e)
+                message(sprintf("Attempt %d failed, retrying...", i))
+                Sys.sleep(5)
+              })
+            }
+          }
+          install_with_retry()
+          '
+        continue-on-error: false
+
       - uses: r-lib/actions/setup-r-dependencies@v2
+        if: runner.os != 'macOS'
         with:
           extra-packages: any::rcmdcheck
           needs: check
         env:
           _R_CHECK_FORCE_SUGGESTS_: false
 
+      - name: Install rcmdcheck (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          Rscript -e 'install.packages("rcmdcheck", repos = "https://cloud.r-project.org")'
+
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
           build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: false

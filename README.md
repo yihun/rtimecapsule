@@ -4,14 +4,9 @@
 [![R-CMD-check](https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yihun/rtimecapsule/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 
-
-
-**rtimecapsule** is an R package that automatically backs up your R, Rmd, and Qmd files in a project as you work, so you can recover from accidental loss or crashes.
-# `rtimecapsule`: Automated File Backup and Restoration for R Projects
-
 ## Overview
 
-The rtimecapsule package provides automated, real-time backup and restoration capabilities for R project files. It continuously monitors your files for changes and maintains backup copies in a hidden `.rtimecapsule` directory, allowing you to recover from crashes, accidental deletions, or unwanted modifications.
+The `rtimecapsule` package provides automated, real-time backup and restoration capabilities for R project files. It continuously monitors your files for changes and maintains backup copies in a hidden `.rtimecapsule` directory, allowing you to recover from crashes, accidental deletions, or unwanted modifications.
 
 ## Features
 
