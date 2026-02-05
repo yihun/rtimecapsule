@@ -193,10 +193,6 @@ Returns `TRUE` invisibly on success.
 
 Throws an error if no `.rtimecapsule` backup directory exists.
 
-**Warning:**
-
-⚠️ This function will overwrite ALL current versions of files with their backup versions. Any changes made since the last backup will be lost.
-
 **Examples:**
 ```r
 # Restore all backed up files after a crash
@@ -292,11 +288,6 @@ restore_file("R/analysis.R")
 restore_last_crash()
 ```
 
-
-
-
-
-
 ## Best Practices
 
 1. **Start backups early**: Run `start_autobackup()` at the beginning of your session
@@ -312,9 +303,6 @@ restore_last_crash()
 
 ## Performance Considerations
 
-- **File scanning**: More tracked files = longer scan times
-- **Interval settings**: Shorter intervals = more responsive but higher overhead
-- **File types**: Large binary files may slow down hash computation
 - **Recommendations**:
   - Track only source code files (`.R`, `.Rmd`, `.qmd`) for best performance
   - Use 2-3 second intervals for typical projects
@@ -339,7 +327,21 @@ capsule_status()$running
 # Check for error messages
 start_autobackup()
 ```
+### Recommended setup (safe and explicit)
+If you want to preserve global startup settings and enable `rtimecapsule` per project, add the following to your project-level `.Rprofile`:
 
+```r
+# Source global R profile if it exists
+if (file.exists("~/.Rprofile")) {
+  source("~/.Rprofile")
+}
+
+# Start rtimecapsule automatically (interactive sessions only)
+if (interactive()) {
+  rtimecapsule::start_autobackup()
+}
+
+```
 ### No Backups Found
 
 **Problem**: `restore_last_crash()` reports "No backups found"
@@ -373,7 +375,6 @@ list.files(".rtimecapsule", recursive = TRUE)
 getwd()
 ```
 
-
 ## Dependencies
 
 - **later**: Required for background task scheduling
@@ -391,26 +392,4 @@ getwd()
 | `capsule_status()`     | Check backup status               |
 | `restore_file()`       | Restore a specific file           |
 | `restore_last_crash()` | Restore all backed up files       |
-
-## FAQ
-
-**Q: Do backups run when R is idle?**  
-A: Yes, the background task continues running until you call `stop_autobackup()`.
-
-**Q: Can I backup files outside my project?**  
-A: No, rtimecapsule only tracks files within the `R project` root directory.
-
-**Q: What happens if I close R while backups are running?**  
-A: Backups stop when the R session ends. Use `use_autobackup()` to restart automatically.
-
-**Q: Can multiple R sessions backup the same project?**  
-A: Yes, but they may overwrite each other's backups.
-
-**Q: Are backups versioned?**  
-A: No, only the most recent version is kept. Use Git for version history.
-
-**Q: Can I exclude specific files?**  
-A: Indirectly, by specifying which files to include via the `files` parameter.
-
----
 
