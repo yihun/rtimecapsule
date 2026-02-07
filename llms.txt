@@ -32,7 +32,6 @@ accidental deletions, or unwanted modifications.
 ## Installation
 
 ``` r
-# Install from GitHub (replace USERNAME with actual GitHub username)
 # install.packages("remotes")
 remotes::install_github("yihun/rtimecapsule")
 ```
